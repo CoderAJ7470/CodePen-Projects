@@ -1,2 +1,2 @@
 # CodePen-Projects
-Projects I have created in my CodePen.
+My CodePen projects.
