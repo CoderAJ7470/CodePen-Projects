@@ -1,91 +1,223 @@
-var randomNumber = 0;
-var currentQuote = "";
-var currentWhoSaid = "";
+/* Default values for all settings (break and session length, and clock minutes/seconds) */
+var defaultBreakLength = 5;
+var defaultSessionLength = 25;
+var defaultMinutes = 25;
+var defaultSeconds = 0;
+var secondsResetValue = 59;
+var breakFlag = 0;
+var timeout = 0;
 
-var whoSaidArray = ["Miles Kington",
-					"Thomas Alva Edison",
-					"Bill Gates",
-					"Jimmy Kimmel",
-					"Rich Hall",
-					"George Carlin",
-					"Reba McEntire",
-					"Will Rogers",
-					"Will Rogers",
-					"Steve Jobs",
-					"Steven Wright"];
+document.getElementById("breakButtonMinus").disabled = true;
+document.getElementById("breakButtonMinus").style.color = "grey";
+document.getElementById("breakButtonPlus").disabled = true;
+document.getElementById("breakButtonPlus").style.color = "grey";
 
-var quotesArray = ["Knowledge is knowing that a tomato is a fruit. Wisdom is not putting it in a fruit salad.",
-				   "Genius is one percent inspiration, ninety-nine percent perspiration.",
-				   "The Wright Brothers created the single greatest cultural force since the invention of writing. The airplane became the first World Wide Web, bringing people, languages, ideas, and values together.",
-				   "How can you ever be late for anything in London? They have a huge clock right in the middle of the town.",
-				   "A hotel minibar allows you to see into the future and find out what a can of Pepsi will cost in 2020.",
-				   "Why is there an expiration date on sour cream?",
-				   "To succeed in life, you need three things: a wishbone, a backbone and a funny bone.",
-				   "Even if you’re on the right track, you’ll get run over if you just sit there.",
-				   "I don't make jokes. I just watch the government and report the facts.",
-				   "Design is a funny word. Some people think design means how it looks. But of course if you dig deeper, it's really how it works.",
-				   "What's another word for \"Thesaurus\"?"];
+var breakLengthMinutes = document.getElementById("breakMinutes").value;
+var clockMinutes = document.getElementById("minutes").value;
+var clockSeconds = document.getElementById("seconds").value;
+var secondsCountedDown;
+var ding = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1321144/Airplane-ding-sound.mp3");
 
-function getArrayLength()
-{
-	/* Get the length of any of the two arrays above */
-	 return quotesArray.length;
-}
-
-
-/* Generate a random number that will span a range from 0 to the last index of each array */
-function generateRandomNumber()
-{
-	randomNumber = Math.floor((Math.random() * getArrayLength()));
-}
-
-function showQuotesAndWhoSaid()
+function startTimer()
 {	
-	generateRandomNumber();
-			
-	document.getElementById("contentParagraph").innerHTML = "\"" + quotesArray[randomNumber] + "\"";
+	if(breakFlag == 0)
+	{
+		updateSessionMessage(1);
+	}
+	else
+	{
+		updateSessionMessage(2);
+	}
+
+	toggleLengthButtons();
 	
-	document.getElementById("whoSaid").innerHTML = "- " + whoSaidArray[randomNumber];
+  	secondsCountedDown = setInterval("countdown()", 1000);
 }
 
-function getCurrentQuote()
+function stopTimer()
 {
-	currentQuote = document.getElementById("contentParagraph").innerHTML;
-	
-	return currentQuote;
+	updateSessionMessage(5);
+	clearInterval(secondsCountedDown);
 }
 
-function getCurrentWhoSaid()
-{
-	currentWhoSaid = document.getElementById("whoSaid").innerHTML;
-	
-	return currentWhoSaid;
-}
-
-function tweetCurrentQuote()
+/* Manages the countdown of the session timer */
+function countdown()
 {	
-	$(".twitter-share-button").attr("href", 'https://twitter.com/intent/tweet?text=' + getCurrentQuote() + " " + getCurrentWhoSaid());
+  if(clockSeconds == -1)
+  {
+    clockSeconds = secondsResetValue;
+	clockMinutes--;
+	updateMinutes();
+  }
+	
+	updateSeconds();
+
+	if(clockMinutes == 0 &&	clockSeconds == 0 && breakFlag == 0)
+	{
+		breakFlag = 1; /* Take a break; session is over */
+		ding.play();
+
+		updateSessionMessage(2);
+
+		toggleLengthButtons();
+
+		clockMinutes = breakLengthMinutes;
+	}
+
+	if(clockMinutes == 0 &&	clockSeconds == 0 && breakFlag == 1)
+	{
+		breakFlag = 0; /* Break is over; new session begins */
+		ding.play();
+
+		updateSessionMessage(1);
+
+		toggleLengthButtons();
+
+		clockMinutes = defaultSessionLength;
+	}
+	
+	clockSeconds--;
+	
+} /* End of countdown function */
+
+/* Increments the session length minutes by one minute
+	 for each click of the "+" button; also changes the
+	 minutes on the clock with the same value */
+function incrementSessionMinutes()
+{
+	updateSessionMessage(3);
+	
+	clearInterval(secondsCountedDown);
+	
+	clockSeconds = defaultSeconds;
+	updateSeconds();
+	
+	clockMinutes = ++document.getElementById("sessionMinutes").value;
+	updateMinutes();
+} /* End of incrementSessionMinutes function */
+
+/* Decrements the session length minutes by one minute
+	 for each click of the "-" button; also changes the
+	 minutes on the clock with the same value */
+function decrementSessionMinutes()
+{
+	updateSessionMessage(3);
+	
+	clearInterval(secondsCountedDown);
+	
+	clockSeconds = defaultSeconds;
+	updateSeconds();
+	
+	clockMinutes = --document.getElementById("sessionMinutes").value;
+	updateMinutes();
+	
+	if(clockMinutes == 0)
+	{
+		clockMinutes = 1;
+		document.getElementById("sessionMinutes").value = clockMinutes;
+		updateMinutes();
+	}
+} /* End of decrementSessionMinutes function */
+
+function incrementBreakMinutes()
+{
+	updateSessionMessage(4);
+	
+	clearInterval(secondsCountedDown);
+	
+	clockSeconds = defaultSeconds;
+	updateSeconds();
+	
+	clockMinutes = ++document.getElementById("breakMinutes").value;
+	updateMinutes();
+} /* End of incrementBreakMinutes function */
+
+function decrementBreakMinutes()
+{
+	updateSessionMessage(4);
+	
+	clearInterval(secondsCountedDown);
+	
+	clockSeconds = defaultSeconds;
+	updateSeconds();
+	
+	clockMinutes = --document.getElementById("breakMinutes").value;
+	updateMinutes();
+	
+	if(clockMinutes == 0)
+	{
+		clockMinutes = 1;
+		document.getElementById("breakMinutes").value =	clockMinutes;
+		updateMinutes();
+	}
+} /* End of decrementMinutes function */
+
+function updateSeconds()
+{
+	document.getElementById("seconds").value = clockSeconds;
 }
 
+function updateMinutes()
+{
+	document.getElementById("minutes").value = clockMinutes;
+}
 
+/* Updates the message displayed according to what the
+	 user or the clock is currently doing */
+function updateSessionMessage(messageCode)
+{
+	switch(messageCode)
+	{
+		case 0:
+			document.getElementById("sessionMessage").innerHTML = "Start your session:";
+			break;
+		case 1:
+			document.getElementById("sessionMessage").innerHTML = "New session in progress:";
+			break;
+		case 2:
+			document.getElementById("sessionMessage").innerHTML = "Break in progress:";
+			break;
+		case 3:
+			document.getElementById("sessionMessage").innerHTML = "Changing session length:";
+			break;
+		case 4:
+			document.getElementById("sessionMessage").innerHTML = "Changing break time:";
+			break;
+		case 5:
+			document.getElementById("sessionMessage").innerHTML = "Clock paused";
+	}
+} /* End of updateSessionMessage code */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Toggles the active status of the break and session length 
+	 buttons and changes their color to grey if they are disabled */
+function toggleLengthButtons()
+{
+	if(breakFlag == 0)
+	{
+		document.getElementById("breakButtonMinus").disabled = true;
+		document.getElementById("breakButtonMinus").style.color = "grey";
+		
+		document.getElementById("breakButtonPlus").disabled = true;
+		document.getElementById("breakButtonPlus").style.color = "grey";
+		
+		document.getElementById("sessionButtonMinus").disabled = false;
+		document.getElementById("sessionButtonMinus").style.color = "white";
+		
+		document.getElementById("sessionButtonPlus").disabled = false;
+		document.getElementById("sessionButtonPlus").style.color = "white";
+	}
+	else
+	{
+		document.getElementById("breakButtonMinus").disabled = false;
+		document.getElementById("breakButtonMinus").style.color = "white";
+		
+		document.getElementById("breakButtonPlus").disabled = false;
+		document.getElementById("breakButtonPlus").style.color = "white";
+		
+		document.getElementById("sessionButtonMinus").disabled = true;
+		document.getElementById("sessionButtonMinus").style.color = "grey";
+		
+		document.getElementById("sessionButtonPlus").disabled = true;
+		document.getElementById("sessionButtonPlus").style.color = "grey";
+	}
+} /* End of toggleLengthButtons function */
