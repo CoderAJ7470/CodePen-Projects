@@ -1,7 +1,3 @@
-/*FileName: quoteGenerator.js
-Last updated: August 3, 2017
-Author: AJ*/
-
 var randomNumber = 0;
 var currentQuote = "";
 var currentWhoSaid = "";
