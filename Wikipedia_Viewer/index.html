@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<!-- Head section -->
+<head>
+	
+	<title>Wikipedia Viewer | Ameya Joshi | CoderAJ7470 | Code Pen Application</title>
+   	<meta charset="utf-8">
+   	<meta name="author" content="Ameya Joshi">
+   	<meta name="description" content="This is a Wikiepdia viewer. You can search any term you like, or get a random
+   		Wikipedia article">
+   	<meta name="keywords" content="wikipedia viewer jquery javascript html">
+   	
+   	<!-- This links to Google CDN jQuery library with a secure connection -->
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+	<!-- Links to the local .css sheet -->
+	<link rel="stylesheet" href="wikiViewer.css">
+	
+	<!-- Links to the local .css sheet -->
+	<script type="text/javascript" src="wikiViewer.js"></script>
+	
+</head>
+
+<!-- Body section -->
+<body>
+	
+	<div id="content">
+	  <h1>Wikipedia Viewer - <i>Your Portal to General Knowledge</i></h1>
+	  
+	  <a href="https://en.wikipedia.org/wiki/Special:Random"
+	          target="_blank" id="surpriseMe">Surprise me Wikipedia!</a>
+	          
+	  <input type="text" name="wikiSearch" id="wikiSearch" tabindex="1"
+	         value="Please enter a search term here">
+	  <br><br>
+	  
+	  <button id="submitButton" value="Search" tabindex="2">Search</button>
+	  <br><br>
+	  
+	  <label class="fieldError">A search term is required</label>
+	  
+	  <div id="results">
+	    <ul id="resultsList">
+	    </ul>
+	  </div>
+	</div>
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
