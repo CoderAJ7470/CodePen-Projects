@@ -1,0 +1,93 @@
+body { background-color: #000;
+       color: #FFF; }
+
+#container { font-family: Arial, Helvetica, sans-serif; }
+
+#messages { width: 290px; }
+
+h3 { text-align: center;
+     font-size: 24px; }
+
+#information { text-align: center; }
+
+#messages, #playerScore, #computerScore { display: inline-block; }
+
+#playerScore[type="text"], #computerScore[type="text"] { border: none;
+                                                         background-color: #000;
+                                                         color: #FFF;
+                                                         font-size: 16px; }
+
+table { width: 30%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 60px;
+        border-collapse: collapse; }
+
+td { text-align: center;
+     width: 140px;
+     height: 140px;
+     font-size: 48px; }
+
+#one, #two, #four, #five { border-right: 2px solid white;
+                        border-bottom: 2px solid white; }
+
+#seven, #eight { border-right: 2px solid white; }
+
+#seven, #eight, #nine { border-top: 2px solid white; }
+
+#three, #six { border-bottom: 2px solid white; }
+
+#two, #three, #six, #eight, #nine { border-left: 2px solid white; }
+
+#five { border: 2px solid white; }
+
+#four, #six { border-top: 2px solid white; }
+
+#options { text-align: center;
+           margin-top: 50px;
+           font-size: 24px; }
+
+#checkBoxO, #checkBoxX { height: 16px;
+                         width: 16px; }
+
+#test { text-align: center; }
+
+@media screen and (max-width: 500px){
+  table { width: 80%; }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1000px){
+  table { width: 70%; }
+}
+
+@media screen and (max-width: 500px){
+  td { width: 80px;
+       height: 80px;
+       font-size: 24px; }
+}
+
+@media screen and (min-width: 500px) and (max-width: 1000px){
+  td { width: 100px;
+       height: 100px; }
+}
+
+@media screen and (max-width: 300px){
+  #messages { width: 150px;
+              font-size: 12px; }
+  #playerScore, #computerScore { display: block;
+                                 text-align: center;
+                                 font-size: 12px; }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
