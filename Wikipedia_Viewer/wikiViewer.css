@@ -37,7 +37,7 @@ form { margin-top: 30px; }
                list-style-type: decimal;
                padding-left: 0px; }
 
-/* media queries */
+/* media query */
 
 @media screen and (max-width: 1000px){
   #wikiSearch { width: 70%; }
