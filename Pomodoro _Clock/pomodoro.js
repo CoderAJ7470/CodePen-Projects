@@ -6,7 +6,6 @@ var defaultSeconds = 0;
 var secondsResetValue = 59;
 var breakFlag = 0;
 var timeout = 0;
-
 document.getElementById("breakButtonMinus").
 disabled = true;
 document.getElementById("breakButtonMinus").
@@ -18,18 +17,17 @@ style.color = "grey";
 document.getElementById("stopButton").disabled = true;
 document.getElementById("stopButton").style.color = "grey";
 
-var breakLengthMinutes = document.getElementById("breakMinutes").value;
-var clockMinutes;
-var clockSeconds;
-
+var breakLengthMinutes =
+		document.getElementById("breakMinutes").value;
+var clockMinutes =
+		document.getElementById("minutes").value;
+var clockSeconds =
+		document.getElementById("seconds").value;
 var secondsCountedDown;
 var ding = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1321144/Airplane-ding-sound.mp3");
 
 function startTimer()
-{
-	clockMinutes = document.getElementById("minutes").value;
-	clockSeconds = document.getElementById("seconds").value;
-		
+{	
 	if(breakFlag == 0)
 	{
 		updateSessionMessage(1);
@@ -46,7 +44,8 @@ function startTimer()
 	document.getElementById("stopButton").disabled = false;
 	document.getElementById("stopButton").style.color = "white";
 	
-  	secondsCountedDown = setInterval(countdown, 1000);
+  secondsCountedDown =
+    setInterval("countdown()", 1000);
 }
 
 function stopTimer()
@@ -55,9 +54,7 @@ function stopTimer()
 	document.getElementById("startButton").style.color = "white";
 	document.getElementById("stopButton").disabled = true;
 	document.getElementById("stopButton").style.color = "grey";
-	
 	updateSessionMessage(5);
-	
 	clearInterval(secondsCountedDown);
 }
 
@@ -66,7 +63,8 @@ function countdown()
 {	
   if(clockSeconds == -1)
   {
-    clockSeconds = secondsResetValue;
+    clockSeconds
+      = secondsResetValue;
 		clockMinutes--;
 		updateMinutes();
   }
@@ -147,7 +145,8 @@ function decrementSessionMinutes()
 	if(clockMinutes == 0)
 	{
 		clockMinutes = 1;
-		document.getElementById("sessionMinutes").value = clockMinutes;
+		document.getElementById("sessionMinutes").value =
+			clockMinutes;
 		updateMinutes();
 	}
 } /* End of decrementSessionMinutes function */
@@ -165,7 +164,8 @@ function incrementBreakMinutes()
 	clockSeconds = defaultSeconds;
 	updateSeconds();
 	
-	clockMinutes = ++document.getElementById("breakMinutes").value;
+	clockMinutes =
+		++document.getElementById("breakMinutes").value;
 	updateMinutes();
 } /* End of incrementBreakMinutes function */
 
@@ -182,7 +182,8 @@ function decrementBreakMinutes()
 	clockSeconds = defaultSeconds;
 	updateSeconds();
 	
-	clockMinutes = --document.getElementById("breakMinutes").value;
+	clockMinutes = 
+		--document.getElementById("breakMinutes").value;
 	updateMinutes();
 	
 	if(clockMinutes == 0)
@@ -196,12 +197,14 @@ function decrementBreakMinutes()
 
 function updateSeconds()
 {
-	document.getElementById("seconds").value = clockSeconds;
+	document.getElementById("seconds").value =
+    clockSeconds;
 }
 
 function updateMinutes()
 {
-	document.getElementById("minutes").value = clockMinutes;
+	document.getElementById("minutes").value = 
+		clockMinutes;
 }
 
 /* Updates the message displayed according to what the
@@ -216,7 +219,7 @@ function updateSessionMessage(messageCode)
 			break;
 		case 1:
 			document.getElementById("sessionMessage")
-			.innerHTML = "Session in progress:";
+			.innerHTML = "New session in progress:";
 			break;
 		case 2:
 			document.getElementById("sessionMessage")
