@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+	
+<!-- Head section -->
+<head>
+	
+	<title>JavaScript Calculator | Ameya Joshi | CoderAJ7470 | Code Pen Application</title>
+   	<meta charset="utf-8">
+   	<meta name="author" content="Ameya Joshi">
+   	<meta name="description" content="This is a simple JavaScript Calculator">
+   	<meta name="keywords" content="javascript html css calculator">
+	
+	<!-- Links to the local .css sheet -->
+	<link rel="stylesheet" href="calculator.css">
+	
+	<!-- Links to the local .css sheet -->
+	<script type="text/javascript" src="calculator.js"></script>
+	
+</head>
+
+<!-- Body section -->
+<body>
+	
+	<div id="container"> <!-- Div for all webpage content -->
+		
+		<div id="content"> <!-- Div for content -->
+		  <h1>A simple calculator built with HTML 5, CSS 3 and JavaScript</h1>
+		  
+		  <form action=""> <!-- Beginning of form for calculator display -->
+			<p>
+			  <input type="text" name="display" id="display" value=""><br>
+			  <input type="button" name="clear" id="clearButton" value="C" onclick="document.forms[0].display.value = '';
+					inputString=''" ><br >
+			  <input type="button" class="buttons" name="seven" id="seven" value="7" onclick="updateString('7')">
+			  <input type="button" class="buttons" name="eight" id="eight" value="8" onclick="updateString('8')">
+			  <input type="button" class="buttons" name="nine" id="nine" value="9" onclick="updateString('9')">
+			  <input type="button" class="operators" name="divide" id="divide" value="/" onclick="updateString('/')"><br>
+			  <input type="button" class="buttons" name="four" id="four" value="4" onclick="updateString('4')">
+			  <input type="button" class="buttons" name="five" id="five" value="5" onclick="updateString('5')">
+			  <input type="button" class="buttons" name="six" id="six" value="6" onclick="updateString('6')">
+			  <input type="button" class="operators" name="multiply" id="multiply" value="*" onclick="updateString('*')"><br>
+			  <input type="button" class="buttons" name="one" id="one" value="1" onclick="updateString('1')">
+			  <input type="button" class="buttons" name="two" id="two" value="2" onclick="updateString('2')">
+			  <input type="button" class="buttons" name="three" id="three" value="3" onclick="updateString('3')">
+			  <input type="button" class="operators" name="subtract" id="subtract" value="-" onclick="updateString('-')"><br>
+			  <input type="button" class="buttons" name="zero" id="zero" value="0" onclick="updateString('0')">
+			  <input type="button" class="operators" name="decimal" id="decimal" value="." onclick="updateString('.')">
+			  <input type="button" class="operators" name="equals" id="equals" value="="
+					onclick="document.forms[0].display.value = eval(inputString); inputString = ''">
+			  <input type="button" class="operators" name="add" id="add" value="+" onclick="updateString('+')"><br>
+			</p>
+		  </form> <!-- End of form for calculator display -->
+		</div> <!-- End of div for content -->
+		
+	</div> <!-- End of div for all webpage content -->
+	
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
