@@ -4,6 +4,7 @@ $(function(){
       $(this).attr("value", "");
   });
   
+  // Runs all code when the user clicks the search button
   $("#submitButton").click(function(){
     let searchTerm = $("#wikiSearch").val();
     
