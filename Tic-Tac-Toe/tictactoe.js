@@ -10,14 +10,14 @@ let playerScore = 0;
 let computerScore = 0;
 let playerCell = "";
 
-$("#playerScore").html("Your score: " + playerScore);
-$("#computerScore").html("&nbsp;Computer score: " + computerScore);
-
 let staticArray = ["#one", "#two", "#three", "#four", "#five", "#six", "#seven", "#eight", "#nine"];
 
 let slotArray = ["#one", "#two", "#three", "#four", "#five", "#six", "#seven", "#eight", "#nine"];
 
 $(function(){
+	
+	$("#playerScore").html("Your score: " + playerScore);
+	$("#computerScore").html("&nbsp;Computer score: " + computerScore);
   
   checkBoxX = $("#checkBoxX");
   checkBoxX.change(function(event){
