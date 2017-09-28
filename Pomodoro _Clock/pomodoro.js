@@ -7,19 +7,29 @@ var secondsResetValue = 59;
 var breakFlag = 0;
 var timeout = 0;
 
-document.getElementById("breakButtonMinus").disabled = true;
-document.getElementById("breakButtonMinus").style.color = "grey";
-document.getElementById("breakButtonPlus").disabled = true;
-document.getElementById("breakButtonPlus").style.color = "grey";
+document.getElementById("breakButtonMinus").
+disabled = true;
+document.getElementById("breakButtonMinus").
+style.color = "grey";
+document.getElementById("breakButtonPlus").
+disabled = true;
+document.getElementById("breakButtonPlus").
+style.color = "grey";
+document.getElementById("stopButton").disabled = true;
+document.getElementById("stopButton").style.color = "grey";
 
 var breakLengthMinutes = document.getElementById("breakMinutes").value;
-var clockMinutes = document.getElementById("minutes").value;
-var clockSeconds = document.getElementById("seconds").value;
+var clockMinutes;
+var clockSeconds;
+
 var secondsCountedDown;
 var ding = new Audio("https://s3-us-west-2.amazonaws.com/s.cdpn.io/1321144/Airplane-ding-sound.mp3");
 
 function startTimer()
-{	
+{
+	clockMinutes = document.getElementById("minutes").value;
+	clockSeconds = document.getElementById("seconds").value;
+		
 	if(breakFlag == 0)
 	{
 		updateSessionMessage(1);
@@ -28,15 +38,26 @@ function startTimer()
 	{
 		updateSessionMessage(2);
 	}
-
+	
 	toggleLengthButtons();
 	
-  	secondsCountedDown = setInterval("countdown()", 1000);
+	document.getElementById("startButton").disabled = true;
+	document.getElementById("startButton").style.color = "grey";
+	document.getElementById("stopButton").disabled = false;
+	document.getElementById("stopButton").style.color = "white";
+	
+  	secondsCountedDown = setInterval(countdown, 1000);
 }
 
 function stopTimer()
 {
+	document.getElementById("startButton").disabled = false;
+	document.getElementById("startButton").style.color = "white";
+	document.getElementById("stopButton").disabled = true;
+	document.getElementById("stopButton").style.color = "grey";
+	
 	updateSessionMessage(5);
+	
 	clearInterval(secondsCountedDown);
 }
 
@@ -46,33 +67,35 @@ function countdown()
   if(clockSeconds == -1)
   {
     clockSeconds = secondsResetValue;
-	clockMinutes--;
-	updateMinutes();
+		clockMinutes--;
+		updateMinutes();
   }
 	
 	updateSeconds();
-
-	if(clockMinutes == 0 &&	clockSeconds == 0 && breakFlag == 0)
+	
+	if(clockMinutes == 0 &&
+		clockSeconds == 0 && breakFlag == 0)
 	{
 		breakFlag = 1; /* Take a break; session is over */
 		ding.play();
-
+		
 		updateSessionMessage(2);
-
+		
 		toggleLengthButtons();
-
+		
 		clockMinutes = breakLengthMinutes;
 	}
-
-	if(clockMinutes == 0 &&	clockSeconds == 0 && breakFlag == 1)
+	
+	if(clockMinutes == 0 &&
+		clockSeconds == 0 && breakFlag == 1)
 	{
 		breakFlag = 0; /* Break is over; new session begins */
 		ding.play();
-
+		
 		updateSessionMessage(1);
-
+		
 		toggleLengthButtons();
-
+		
 		clockMinutes = defaultSessionLength;
 	}
 	
@@ -85,6 +108,10 @@ function countdown()
 	 minutes on the clock with the same value */
 function incrementSessionMinutes()
 {
+	document.getElementById("startButton").disabled = false;
+	document.getElementById("startButton").style.color = "white";
+	document.getElementById("stopButton").disabled = true;
+	document.getElementById("stopButton").style.color = "grey";
 	updateSessionMessage(3);
 	
 	clearInterval(secondsCountedDown);
@@ -92,7 +119,8 @@ function incrementSessionMinutes()
 	clockSeconds = defaultSeconds;
 	updateSeconds();
 	
-	clockMinutes = ++document.getElementById("sessionMinutes").value;
+	clockMinutes =
+		++document.getElementById("sessionMinutes").value;
 	updateMinutes();
 } /* End of incrementSessionMinutes function */
 
@@ -101,6 +129,10 @@ function incrementSessionMinutes()
 	 minutes on the clock with the same value */
 function decrementSessionMinutes()
 {
+	document.getElementById("startButton").disabled = false;
+	document.getElementById("startButton").style.color = "white";
+	document.getElementById("stopButton").disabled = true;
+	document.getElementById("stopButton").style.color = "grey";
 	updateSessionMessage(3);
 	
 	clearInterval(secondsCountedDown);
@@ -108,7 +140,8 @@ function decrementSessionMinutes()
 	clockSeconds = defaultSeconds;
 	updateSeconds();
 	
-	clockMinutes = --document.getElementById("sessionMinutes").value;
+	clockMinutes = 
+		--document.getElementById("sessionMinutes").value;
 	updateMinutes();
 	
 	if(clockMinutes == 0)
@@ -121,6 +154,10 @@ function decrementSessionMinutes()
 
 function incrementBreakMinutes()
 {
+	document.getElementById("startButton").disabled = false;
+	document.getElementById("startButton").style.color = "white";
+	document.getElementById("stopButton").disabled = true;
+	document.getElementById("stopButton").style.color = "grey";
 	updateSessionMessage(4);
 	
 	clearInterval(secondsCountedDown);
@@ -134,6 +171,10 @@ function incrementBreakMinutes()
 
 function decrementBreakMinutes()
 {
+	document.getElementById("startButton").disabled = false;
+	document.getElementById("startButton").style.color = "white";
+	document.getElementById("stopButton").disabled = true;
+	document.getElementById("stopButton").style.color = "grey";
 	updateSessionMessage(4);
 	
 	clearInterval(secondsCountedDown);
@@ -147,7 +188,8 @@ function decrementBreakMinutes()
 	if(clockMinutes == 0)
 	{
 		clockMinutes = 1;
-		document.getElementById("breakMinutes").value =	clockMinutes;
+		document.getElementById("breakMinutes").value =
+			clockMinutes;
 		updateMinutes();
 	}
 } /* End of decrementMinutes function */
@@ -169,22 +211,28 @@ function updateSessionMessage(messageCode)
 	switch(messageCode)
 	{
 		case 0:
-			document.getElementById("sessionMessage").innerHTML = "Start your session:";
+			document.getElementById("sessionMessage")
+			.innerHTML = "Start your session:";
 			break;
 		case 1:
-			document.getElementById("sessionMessage").innerHTML = "New session in progress:";
+			document.getElementById("sessionMessage")
+			.innerHTML = "Session in progress:";
 			break;
 		case 2:
-			document.getElementById("sessionMessage").innerHTML = "Break in progress:";
+			document.getElementById("sessionMessage")
+			.innerHTML = "Break in progress:";
 			break;
 		case 3:
-			document.getElementById("sessionMessage").innerHTML = "Changing session length:";
+			document.getElementById("sessionMessage")
+			.innerHTML = "Changing session length:";
 			break;
 		case 4:
-			document.getElementById("sessionMessage").innerHTML = "Changing break time:";
+			document.getElementById("sessionMessage")
+			.innerHTML = "Changing break time:";
 			break;
 		case 5:
-			document.getElementById("sessionMessage").innerHTML = "Clock paused";
+			document.getElementById("sessionMessage")
+			.innerHTML = "Clock paused";
 	}
 } /* End of updateSessionMessage code */
 
@@ -194,30 +242,40 @@ function toggleLengthButtons()
 {
 	if(breakFlag == 0)
 	{
-		document.getElementById("breakButtonMinus").disabled = true;
-		document.getElementById("breakButtonMinus").style.color = "grey";
-		
-		document.getElementById("breakButtonPlus").disabled = true;
-		document.getElementById("breakButtonPlus").style.color = "grey";
-		
-		document.getElementById("sessionButtonMinus").disabled = false;
-		document.getElementById("sessionButtonMinus").style.color = "white";
-		
-		document.getElementById("sessionButtonPlus").disabled = false;
-		document.getElementById("sessionButtonPlus").style.color = "white";
+		document.getElementById("breakButtonMinus").
+			disabled = true;
+		document.getElementById("breakButtonMinus").
+			style.color = "grey";
+		document.getElementById("breakButtonPlus").
+			disabled = true;
+		document.getElementById("breakButtonPlus").
+			style.color = "grey";
+		document.getElementById("sessionButtonMinus").
+			disabled = false;
+		document.getElementById("sessionButtonMinus").
+			style.color = "white";
+		document.getElementById("sessionButtonPlus").
+			disabled = false;
+		document.getElementById("sessionButtonPlus").
+			style.color = "white";
 	}
 	else
 	{
-		document.getElementById("breakButtonMinus").disabled = false;
-		document.getElementById("breakButtonMinus").style.color = "white";
-		
-		document.getElementById("breakButtonPlus").disabled = false;
-		document.getElementById("breakButtonPlus").style.color = "white";
-		
-		document.getElementById("sessionButtonMinus").disabled = true;
-		document.getElementById("sessionButtonMinus").style.color = "grey";
-		
-		document.getElementById("sessionButtonPlus").disabled = true;
-		document.getElementById("sessionButtonPlus").style.color = "grey";
+		document.getElementById("breakButtonMinus").
+			disabled = false;
+		document.getElementById("breakButtonMinus").
+			style.color = "white";
+		document.getElementById("breakButtonPlus").
+			disabled = false;
+		document.getElementById("breakButtonPlus").
+			style.color = "white";
+		document.getElementById("sessionButtonMinus").
+			disabled = true;
+		document.getElementById("sessionButtonMinus").
+			style.color = "grey";
+		document.getElementById("sessionButtonPlus").
+			disabled = true;
+		document.getElementById("sessionButtonPlus").
+			style.color = "grey";
 	}
 } /* End of toggleLengthButtons function */
