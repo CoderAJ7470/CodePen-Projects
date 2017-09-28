@@ -12,10 +12,10 @@ h3 { text-align: center;
 
 #messages, #playerScore, #computerScore { display: inline-block; }
 
-#playerScore[type="text"], #computerScore[type="text"] { border: none;
-                                                         background-color: #000;
-                                                         color: #FFF;
-                                                         font-size: 16px; }
+#playerScore input, #computerScore input { border: none;
+                               			   background-color: #000;
+                               			   color: #FFF;
+                               			   font-size: 16px; }
 
 table { width: 30%;
         margin-left: auto;
